@@ -2,11 +2,10 @@ import appointment as ap
 import os
 
 # Declare variables and constants
-appt_list = [] 
-DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+DAY_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 OPEN_TIME = range(9,17)
 
-def open_management_system():
+def open_management_system(appt_list):
     print('Starting the Appointment Manager System')
 
     # Create weekly calendar
@@ -116,11 +115,11 @@ def check_file_exists(file_name):
 def load_schedule_apportments():
     pass
 
-def create_weekly_calendar():
-    ''' This function will create a weekly calendar'''
-    for day in DAYS:
+def create_weekly_calendar (appointment_list):
+    for day in DAY_OF_WEEK:
         for time in OPEN_TIME:
-            appt_list.append(ap.Appointment(day, time))
+            appointment_list.append(ap.Appointment(day, time))
+
 
 def enter_client_name():
     name = input('Client Name: ').capitalize()
@@ -159,7 +158,7 @@ def exit_management_system(appt_list=appt_list):
         print (f'{records_cnt} scheduled appointments have been successfull saved\n')
     
     print('Good Bye!')
-
+    
 def main():
     open_management_system()
 
