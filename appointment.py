@@ -1,18 +1,3 @@
-# ***************************************************************************************************************************
-# This class will create an individual appointment for Jojo's Hair Salon clients. 
-#
-#  Input 
-#     day_of_week
-#     start_time_hour
-#     appt_type
-#     client_name
-#     client_phone
-#
-#  Output:
-#     Appointment Schedule
-#     Appointment List
-#     
-# ***************************************************************************************************************************
 class Appointment :
     def __init__(self,day_of_week, start_time_hour,appt_type = 0, client_name = "", client_phone="") :
         ''' Initialize the Appointment class that requires the the properties day_of_week, start_time_hour, and optional properties of 
