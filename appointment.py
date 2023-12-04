@@ -43,9 +43,8 @@ class Appointment :
         ''' Getter method for start time in hours'''
         return self.__start_time_hour
     
-    def get_app_type_desc(self):
+    def get_app_type_desc(appt_type):
         ''' Getter method for the appointment description based on appointment type'''
-        appt_type = self.__appt_type
         appt_desc_dictionary = {0:'Available',
                                 1:'Mens Cut', 
                                 2:'Ladies Cut',
@@ -109,6 +108,6 @@ class Appointment :
         end_time_hr = Appointment.get_end_time_hour(self)
         end_time_hr = Appointment.format_time(end_time_hr)
         start_time_hr = Appointment.format_time(self.__start_time_hour)
-        appt_desc = Appointment.get_app_type_desc(self)
-        schedule = f'{self.__client_name:<20}{self.__client_phone:<15}{self.__appt_day:<10}{start_time_hr:>10} - {end_time_hr:<5}{appt_desc:>20}'
+        appt_desc = Appointment.get_app_type_desc(self.__appt_type)
+        schedule = f'{self.__client_name:<20}{self.__client_phone:<15}{self.__appt_day:<10}{start_time_hr:<5} - {end_time_hr:<10}{appt_desc:<20}'
         return schedule
