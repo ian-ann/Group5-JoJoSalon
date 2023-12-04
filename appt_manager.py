@@ -16,8 +16,11 @@ def print_menu():
 def load_schedule_apportments():
     pass
 
-def create_weekly_calendar():
-    pass 
+def create_weekly_calendar (appointment_list):
+    dayOfTheWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    for day in dayOfTheWeek:
+        for time in range (9,17):
+            appointment_list.append(ap.Appointment(day, time))
 
 def main():
     pass
