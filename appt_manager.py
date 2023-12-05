@@ -4,6 +4,7 @@ import os
 # Declare variables and constants
 DAY_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 OPEN_TIME = range(9,17)
+TABLE_HEADER = f'{"Client Name":<20s}{"Phone":<15s}{"Day":<10s}{"Start":<5s}   {"End":<10s}{"Type":<20s}'
 
 def save_scheduled_appointments(appt_list, day, time, appt_type = 0, client_name = "", client_phone = "", output = True):
     current_appt = find_appointment_by_time(appt_list, day, time)
@@ -22,7 +23,7 @@ def show_appointments_by_day(appt_list,day):
     divider = "-" * 90
     print(f'Appointments for {day}')
     print("")
-    print(f'{"Client Name":<20s}{"Phone":<15s}{"Day":<10s}{"Start":<5s}   {"End":<10s}{"Type":<20s}')
+    print(TABLE_HEADER)
     print(f'{divider}')
     
     # check if appointment is already booked
@@ -102,7 +103,7 @@ def exit_management_system(appt_list):
         for appt in appt_list:
             if appt.get_appt_type() != 0:
                 appt_row = appt.format_record()
-                appointment_file.write(appt_row)
+                appointment_file.write(appt_row + "\n")
         appointment_file.close()
 
         # check how many records in the file
@@ -120,8 +121,7 @@ def main():
     appt_list = []
     available = None
     appt_type_price = {1:"$50",2:"$80",3:"$50",4:"$120"}
-    menu_desc = {0:"Available", 1:"Mens Cut", 2:"Ladies Cut", 3:"Mens Colouring",
-                   4:"Ladies Colouring"}
+    menu_desc = ap.Appointment.menu_desc
     NOT_IN_CALENDAR = 'Sorry that time slot is not in the weekly calendar!\n'
     
     print('Starting the Appointment Manager System')
@@ -179,7 +179,8 @@ def main():
                         else:
                             save_scheduled_appointments(appt_list, day, time, appt_type, client_name, client_phone)
             case '2':
-                show_appointments_by_name()
+                    client_name = enter_client_name()
+                    show_appointments_by_name(appt_list, client_name)
             case '3':
                 print('** Print calendar for a specific day **')
                 day = input('Enter day of week: ').capitalize()
@@ -199,7 +200,7 @@ def main():
 
         menuOption = print_menu()
     
-    exit_management_system()
+    exit_management_system(appt_list)
 
 # Call main function
 if __name__ == "__main__":
