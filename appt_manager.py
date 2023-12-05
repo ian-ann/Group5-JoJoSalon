@@ -6,10 +6,9 @@ DAY_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday
 OPEN_TIME = range(9,17)
 
 def save_scheduled_appointments(appt_list, day, time, appt_type = 0, client_name = "", client_phone = "", output = True):
-    print(type(appt_list))
     current_appt = find_appointment_by_time(appt_list, day, time)
 
-    if len(current_appt) > 0:
+    if current_appt:
         # book it 
         current_appt.set_client_name(client_name)
         current_appt.set_client_phone(client_phone)
@@ -34,9 +33,8 @@ def show_appointments_by_day(appt_list,day):
 def show_appointments_by_name(appt_list):
     pass
 
-def find_appointment_by_time(appt_list, day, hour):
-
-    return appt_list # test only
+def find_appointment_by_time (appointment_list, day, hour):
+    pass
 
 def print_menu():
     optionsBanner = {'1':'Schedule an appointment', '2': 'Find appointment by name',
@@ -51,7 +49,12 @@ def print_menu():
 
     menuChoice = input ('Enter your selection: ').strip()
     while menuChoice not in optionsBanner:
-        menuChoice = input ('Sorry that is not a valid selection').strip()
+        menuChoice = 'Sorry that is not a valid selection'
+
+        print (f'\nJojo\'s Hair Salon Appointment Manager')
+        print (f'{dash}')
+        for menuNumbers, description in optionsBanner.items():
+            print (f'{menuNumbers}) {description}')
     
     print("")
     return (menuChoice)
@@ -64,23 +67,8 @@ def check_file_exists(file_name):
 
     return found
    
-def load_schedule_appointments(appt_list, file_name):      
-        appt_file = open(file_name, 'r')
-        records_cnt = 0
-
-        # loop through appointment file and save to list
-        for appt_record in appt_file:
-            appt_row = appt_record.split(",")
-            client_name = appt_row[0]
-            client_phone = appt_row[1]
-            appt_type = int(appt_row[2])
-            day = appt_row[3]
-            time = int(appt_row[4].strip('\n'))
-            save_scheduled_appointments(appt_list,day, time, appt_type, client_name, client_phone,False)
-            
-            records_cnt += 1
-
-        print (f'{records_cnt} previously scheduled appointments have been loaded\n')
+def load_scheduled_appointments (appointment_list, filename):
+    pass
 
 def create_weekly_calendar (appointment_list):
     for day in DAY_OF_WEEK:
@@ -130,6 +118,7 @@ def exit_management_system(appt_list):
 def main():    
     # Declare Variables
     appt_list = []
+    available = None
     appt_type_price = {1:"$50",2:"$80",3:"$50",4:"$120"}
     menu_desc = {0:"Available", 1:"Mens Cut", 2:"Ladies Cut", 3:"Mens Colouring",
                    4:"Ladies Colouring"}
@@ -140,7 +129,7 @@ def main():
     # Create weekly calendar
     create_weekly_calendar(appt_list)
 
-    # Call Loadd Scheduale Appointments
+    # Call Load Schedule Appointments if Yes to load
     load_file = input('Would you like to load previously scheduled appointments from a file (Y/N)? ').upper()
 
     if load_file == 'Y':
@@ -149,47 +138,46 @@ def main():
         while check_file_exists(file_name) == False:
             file_name = input('File not found. Re-enter appointment filename: ')
 
-        # Load schedule to appoint list from file name
-        load_schedule_appointments(appt_list, file_name)
+        # Get records count
+        records_cnt = load_scheduled_appointments(appt_list, file_name)
+        
+        # Print records loaded
+        print (f'{records_cnt} previously scheduled appointments have been loaded\n')
 
     # Call Print Menu
     menuOption = print_menu()
 
     while menuOption != '9':
-        if menuOption == '1' or menuOption == '4':
-            valid = True
-
-            day = input('What day: ').capitalize()
-            time = int(input('Enter start hour (24 hour clock) : '))
-
-            if (day not in DAY_OF_WEEK or time not in OPEN_TIME):
-                print(NOT_IN_CALENDAR)
-                valid = False
-            else:
-                available, _ = find_appointment_by_time(appt_list, day, time)
-
         match menuOption:         
             case '1':
-                if not available:
-                    print("Sorry that time slot is booked already")
-                else:
-                    client_name = enter_client_name()
-                    client_phone = input('Client Phone: ')
-                    index = 0
-                    for type in appt_type_price:
-                        for appt_type in menu_desc:
-                            if type == appt_type:
-                                print(f'{type}: {menu_desc[appt_type]} {appt_type_price[type]}',end='')
-                        if index != len(appt_type_price) - 1:
-                            print(', ', end='')
-                        index += 1
+                day = input('What day: ').capitalize()
+                time = int(input('Enter start hour (24 hour clock) : '))
 
-                    print('')
-                    appt_type = int(input('Type of Appointment: '))
-                    if appt_type not in appt_type_price:
-                        print('Sorry that is not a valid appointment type!')
+                if (day not in DAY_OF_WEEK or time not in OPEN_TIME):
+                    print(NOT_IN_CALENDAR)
+                else:
+                    current_appt = find_appointment_by_time(appt_list, day, time)
+            
+                    if not current_appt:
+                        print("Sorry that time slot is booked already")
                     else:
-                        save_scheduled_appointments(appt_list, day, time, appt_type, client_name, client_phone)
+                        client_name = enter_client_name()
+                        client_phone = input('Client Phone: ')
+                        index = 0
+                        for type in appt_type_price:
+                            for appt_type in menu_desc:
+                                if type == appt_type:
+                                    print(f'{type}: {menu_desc[appt_type]} {appt_type_price[type]}',end='')
+                            if index != len(appt_type_price) - 1:
+                                print(', ', end='')
+                            index += 1
+
+                        print('')
+                        appt_type = int(input('Type of Appointment: '))
+                        if appt_type not in appt_type_price:
+                            print('Sorry that is not a valid appointment type!')
+                        else:
+                            save_scheduled_appointments(appt_list, day, time, appt_type, client_name, client_phone)
             case '2':
                 show_appointments_by_name()
             case '3':
@@ -197,11 +185,17 @@ def main():
                 day = input('Enter day of week: ').capitalize()
                 show_appointments_by_day(appt_list,day)
             case '4':
-                current_appt = find_appointment_by_time(appt_list, day, time)
-                if len(current_appt) > 0:
-                    current_appt.cancel()
-                else:
+                day = input('What day: ').capitalize()
+                time = int(input('Enter start hour (24 hour clock) : '))
+
+                if (day not in DAY_OF_WEEK or time not in OPEN_TIME):
                     print(NOT_IN_CALENDAR)
+                else:                 
+                    current_appt = find_appointment_by_time(appt_list, day, time)
+                    if not current_appt:
+                        print(NOT_IN_CALENDAR)
+                    else:
+                        current_appt.cancel()
 
         menuOption = print_menu()
     
