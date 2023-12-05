@@ -5,8 +5,10 @@ import os
 DAY_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 OPEN_TIME = range(9,17)
 TABLE_HEADER = f'{"Client Name":<20s}{"Phone":<15s}{"Day":<10s}{"Start":<5s}   {"End":<10s}{"Type":<20s}'
+NOT_IN_CALENDAR = 'Sorry that time slot is not in the weekly calendar!\n'
+APPT_TYPE_PRICE = {1:"$50",2:"$80",3:"$50",4:"$120"}
 
-def save_scheduled_appointments(appt_list, day, time, appt_type = 0, client_name = "", client_phone = "", output = True):
+def save_schedule(appt_list, day, time, appt_type = 0, client_name = "", client_phone = "", output = True):
     current_appt = find_appointment_by_time(appt_list, day, time)
 
     if current_appt:
@@ -88,8 +90,7 @@ def check_previous_appointments():
 
     return appointment_exists
 
-def exit_management_system(appt_list):
-    print ('\n** Exit the system **\n')
+def save_scheduled_appointments(appt_list):
     records_cnt = 0
     save_to_file = input('Would you like to save all scheduled appointments to a file (Y/N)? ').upper()
     if save_to_file == 'Y':
@@ -113,16 +114,29 @@ def exit_management_system(appt_list):
             records_cnt += 1
 
         print (f'{records_cnt} scheduled appointments have been successfull saved\n')
-    
-    print('Good Bye!')
+
+def validate_day_and_time(day, time):
+    if (day not in DAY_OF_WEEK or time not in OPEN_TIME):
+        print(NOT_IN_CALENDAR)
+        return False
+    return True
+
+def print_appointment_types():
+    menu_desc = ap.Appointment.menu_desc
+
+    index = 0
+    for type in APPT_TYPE_PRICE:
+        for appt_type in menu_desc:
+            if type == appt_type:
+                print(f'{type}: {menu_desc[appt_type]} {APPT_TYPE_PRICE[type]}',end='')
+        if index != len(APPT_TYPE_PRICE) - 1:
+            print(', ', end='')
+        index += 1
+    print('')
 
 def main():    
     # Declare Variables
     appt_list = []
-    available = None
-    appt_type_price = {1:"$50",2:"$80",3:"$50",4:"$120"}
-    menu_desc = ap.Appointment.menu_desc
-    NOT_IN_CALENDAR = 'Sorry that time slot is not in the weekly calendar!\n'
     
     print('Starting the Appointment Manager System')
 
@@ -152,10 +166,7 @@ def main():
             case '1':
                 day = input('What day: ').capitalize()
                 time = int(input('Enter start hour (24 hour clock) : '))
-
-                if (day not in DAY_OF_WEEK or time not in OPEN_TIME):
-                    print(NOT_IN_CALENDAR)
-                else:
+                if validate_day_and_time(day, time):
                     current_appt = find_appointment_by_time(appt_list, day, time)
             
                     if not current_appt:
@@ -163,24 +174,15 @@ def main():
                     else:
                         client_name = enter_client_name()
                         client_phone = input('Client Phone: ')
-                        index = 0
-                        for type in appt_type_price:
-                            for appt_type in menu_desc:
-                                if type == appt_type:
-                                    print(f'{type}: {menu_desc[appt_type]} {appt_type_price[type]}',end='')
-                            if index != len(appt_type_price) - 1:
-                                print(', ', end='')
-                            index += 1
-
-                        print('')
+                        print_appointment_types()
                         appt_type = int(input('Type of Appointment: '))
-                        if appt_type not in appt_type_price:
+                        if appt_type not in APPT_TYPE_PRICE:
                             print('Sorry that is not a valid appointment type!')
                         else:
-                            save_scheduled_appointments(appt_list, day, time, appt_type, client_name, client_phone)
+                            save_schedule(appt_list, day, time, appt_type, client_name, client_phone)
             case '2':
-                    client_name = enter_client_name()
-                    show_appointments_by_name(appt_list, client_name)
+                client_name = enter_client_name()
+                show_appointments_by_name(appt_list, client_name)
             case '3':
                 print('** Print calendar for a specific day **')
                 day = input('Enter day of week: ').capitalize()
@@ -188,10 +190,7 @@ def main():
             case '4':
                 day = input('What day: ').capitalize()
                 time = int(input('Enter start hour (24 hour clock) : '))
-
-                if (day not in DAY_OF_WEEK or time not in OPEN_TIME):
-                    print(NOT_IN_CALENDAR)
-                else:                 
+                if validate_day_and_time(day, time):                 
                     current_appt = find_appointment_by_time(appt_list, day, time)
                     if not current_appt:
                         print(NOT_IN_CALENDAR)
@@ -199,8 +198,10 @@ def main():
                         current_appt.cancel()
 
         menuOption = print_menu()
-    
-    exit_management_system(appt_list)
+
+    print ('\n** Exit the system **\n')
+    save_scheduled_appointments(appt_list)
+    print('Good Bye!')
 
 # Call main function
 if __name__ == "__main__":
