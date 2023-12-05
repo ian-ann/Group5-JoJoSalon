@@ -193,9 +193,10 @@ def main():
                 if validate_day_and_time(day, time):                 
                     current_appt = find_appointment_by_time(appt_list, day, time)
                     if not current_appt:
-                        print(NOT_IN_CALENDAR)
+                        print('That time slot isn\'t booked and doesn\'t need to be cancelled')
                     else:
                         current_appt.cancel()
+                        print(f'Appointment: {day} {current_appt.get_start_time_hour} - {current_appt.get_end_time_hour} for {current_appt.get_client_name} has been cancelled!')
 
         menuOption = print_menu()
 
