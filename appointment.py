@@ -14,9 +14,9 @@
 #     
 # ***************************************************************************************************************************
 class Appointment :
-    __menu_desc = {0:"Available", 1:"Mens Cut", 2:"Ladies Cut", 3:"Mens Colouring",
+    menu_desc = {0:"Available", 1:"Mens Cut", 2:"Ladies Cut", 3:"Mens Colouring",
                    4:"Ladies Colouring"}
-    
+
     def __init__(self, day_of_week, start_time_hour, appt_type = 0, client_name = "", client_phone = "") :
         ''' Initialize the Appointment class that requires the the properties day_of_week, start_time_hour, and optional properties of 
         appt_type, client_name and client_phone '''
