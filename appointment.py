@@ -25,38 +25,31 @@ class Appointment :
         self.__client_name = client_name
         self.__client_phone = client_phone
         self.__appt_type = appt_type
+        self.__day_of_week = day_of_week
+        self.__start_time_hour = start_time_hour
 
-    def get_client_name(self):
-        ''' Getter method for client name'''
+    def get_client_name (self):
         return self.__client_name
-     
-    def get_client_phone(self):
-        ''' Getter method for client phone'''
+    
+    def get_client_phone (self):
         return self.__client_phone
     
-    def get_appt_type(self):
-        ''' Getter method for appoint type'''
+    def get_appt_type (self):
         return self.__appt_type
     
     def get_day_of_week(self):
         ''' Getter method for day of week'''
         return self.__day_of_week
     
-    def get_start_time_hour(self):
-        ''' Getter method for start time in hours'''
+    def get_start_time_hour (self):
         return self.__start_time_hour
+
+    def get_appt_type_desc (self):
+        return Appointment.menu_desc [self.__appt_type]
     
-    def get_appt_type_desc(self):
-        ''' Getter method for the appointment description based on appointment type'''       
-        return self.__menu_desc [self.__appt_type]
-
-    def get_end_time_hour(self):
-        ''' Getter method for end time based on start time hour'''
-        start_time = self.__start_time_hour
-        end_time_hr = start_time + 1
-
-        return end_time_hr
-
+    def get_end_time_hour (self):
+        return self.__start_time_hour + 1
+    
     def set_client_name(self, client_name):
         ''' Setter method for client name'''
         self.__client_name = client_name
@@ -68,7 +61,7 @@ class Appointment :
     def set_appt_type(self, appt_type):
         ''' Setter method for appointment type'''
         self.__appt_type = appt_type
-
+    
     def schedule(self, client_name, client_phone, appt_type):
         ''' Will call the setter methods and schedule a client visit'''
         self.set_client_name (client_name)
