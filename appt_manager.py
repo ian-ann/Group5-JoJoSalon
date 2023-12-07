@@ -50,13 +50,7 @@ def show_appointments_by_day(appt_list, day):
 
     Arguments: appointment list and day of appointment '''
 
-    divider = "-" * 90
-    print(f'Appointments for {day}')
-    print("")
-    print(TABLE_HEADER)
-    print(TABLE_HEADER)
-    print(f'{divider}')
-    
+    print(TABLE_HEADER)    
     # Check if appointment is already booked
     for appt in appt_list:
         if appt.get_day_of_week() == day:
