@@ -37,7 +37,6 @@ BINARY_CHOICE = ['Y','N']
 OPERATING_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 OPERATING_HOURS = range(9,17)
 TABLE_HEADER = f'{"Client Name":20s}{"Phone":15s}{"Day":10s}{"Start":10s}{"End":10s}{"Type":20s}\n{"-"*80}'
-ERROR_PROMPT = 'Sorry that time slot is not in the weekly calendar!\n'
 APPT_TYPE_PRICE = {1:"$50",2:"$80",3:"$50",4:"$120"}
 ERROR_PROMPT = 'Sorry that time slot is not in the weekly calendar!'
 OPTIONS_BANNER = {'1':'Schedule an appointment', '2': 'Find appointment by name',
