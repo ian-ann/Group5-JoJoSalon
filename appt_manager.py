@@ -275,7 +275,6 @@ def main():
                 show_appointments_by_name(appt_list, client_name)
             case '3':
                 print (f'\n** {OPTIONS_BANNER["3"]} **')
-                print('** Print calendar for a specific day **')
                 day = input('Enter day of week: ').capitalize()
                 show_appointments_by_day(appt_list,day)
             case '4':
