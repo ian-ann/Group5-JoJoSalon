@@ -218,19 +218,15 @@ def validate_day_and_time(day, time):
 
 def print_appointment_types():
     ''' This function is to print/display appointment types along with their corresponding prices '''
-
     menu_desc = ap.Appointment.menu_desc
-
     index = 0
+    menu_desc_withprice = ""
     for type in APPT_TYPE_PRICE:
-        for appt_type in menu_desc:
-            if type == appt_type:
-                print(f'{type}: {menu_desc[appt_type]} {APPT_TYPE_PRICE[type]}',end='')
+        if type in menu_desc:
+            menu_desc_withprice += f'{type}: {menu_desc[type]} {APPT_TYPE_PRICE[type]}'
         if index != len(APPT_TYPE_PRICE) - 1:
-            print(', ', end='')
+            menu_desc_withprice += ", "
         index += 1
-    print('')
-
 
 
 def main():    
@@ -270,7 +266,7 @@ def main():
                 if validate_day_and_time(day, time):
                     current_appt = find_appointment_by_time(appt_list, day, time)
                       
-                    if not current_appt:
+                    if current_appt.get_appt_type() != 0::
                         print("Sorry that time slot is booked already")
                     else:
                         client_name = enter_client_name()
