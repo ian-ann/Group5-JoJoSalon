@@ -231,21 +231,7 @@ def print_appointment_types():
         index += 1
     print('')
 
-def save_schedule(appt_list, day, time, appt_type = 0, client_name = "", client_phone = "", output = True):
-    current_appt = find_appointment_by_time(appt_list, day, time)
 
-    ''' This function 
-
-    '''
-
-    if current_appt:
-        # book it 
-        current_appt.set_client_name(client_name)
-        current_appt.set_client_phone(client_phone)
-        current_appt.set_appt_type(appt_type) 
-        
-    if output:
-        print(f'OK, {client_name}\'s appointment is scheduled!')
 
 def main():    
     ''' Contains the main logic and functionality of the program. '''
@@ -290,17 +276,13 @@ def main():
                         client_name = enter_client_name()
                         client_phone = input('Client Phone: ')
                         print_appointment_types()
-                        print_appointment_types()
                         appt_type = int(input('Type of Appointment: '))
                         if appt_type not in APPT_TYPE_PRICE:
                             print('Sorry that is not a valid appointment type!')
-                        if appt_type not in APPT_TYPE_PRICE:
-                            print('Sorry that is not a valid appointment type!')
                         else:
-                            save_schedule(appt_list, day, time, appt_type, client_name, client_phone)
+                            current_appt.schedule(appt_type, client_name, client_phone)
+                            print(f'OK, {client_name}\'s appointment is scheduled!')
             case '2':
-                client_name = enter_client_name()
-                show_appointments_by_name(appt_list, client_name)
                 client_name = enter_client_name()
                 show_appointments_by_name(appt_list, client_name)
             case '3':
@@ -316,7 +298,7 @@ def main():
                         print('That time slot isn\'t booked and doesn\'t need to be cancelled')
                     else:
                         current_appt.cancel()
-                        print(f'Appointment: {day} {current_appt.get_start_time_hour} - {current_appt.get_end_time_hour} for {current_appt.get_client_name} has been cancelled!')
+                        print(f'Appointment: {day} {current_appt.get_start_time_hour():02d}:00 - {current_appt.get_end_time_hour()}:00 for {current_appt.get_client_name()} has been cancelled!')
 
         menuOption = print_menu()
 
