@@ -1,3 +1,34 @@
+# *****************************************************************************************************************************
+# This program was made for Jojo's Hair Salon appointment management system. This is to track their client's details including 
+# name, phone number, appointment type, and corresponding schedule in terms of day and time. The program can also create a 
+# one-week calendar of available appointments: Mondays - Saturdays from 9AM-4PM daily (wherein last appointment is 4PM-5PM). The 
+# program also allows the users/clients to load their previously booked appointments into the calendar, and perform tasks such as 
+# schedule and cancel an appointment, find appointment by name, print calendar for a specific day, and save all scheduled 
+# appointments to a file.
+#
+#  Inputs:
+#    Appointment filename
+#    Day and time of appointment
+#    Customer's name and phone number
+#    Type of appointment (from options menu)
+#
+#  Output:
+#    Appointment manager menu options
+#    Appointment types
+#    Appointment and weekly calendar
+#
+#  Output Messages:
+#    Error messages
+#    Confirmation messages  
+#
+#  Group Assignment
+#    Victor Flores Jr
+#    Marian Estrada
+#    Kristel Palgan
+
+#  Version 2023-Dec-06
+# ***************************************************************************************************************************
+
 import appointment as ap
 import os
 
@@ -14,8 +45,11 @@ OPTIONS_BANNER = {'1':'Schedule an appointment', '2': 'Find appointment by name'
                      '4': 'Cancel an appointment', '9':'Exit the system'}
 
 
-def show_appointments_by_day(appt_list,day):
-    ''' This function will print the appointment based on the input value of day'''
+def show_appointments_by_day(appt_list, day):
+    ''' This function receives the day of the appointment, searches from the appointment list and displays all matching appointments.
+
+    Arguments: appointment list and day of appointment '''
+
     divider = "-" * 90
     print(f'Appointments for {day}')
     print("")
@@ -23,12 +57,20 @@ def show_appointments_by_day(appt_list,day):
     print(TABLE_HEADER)
     print(f'{divider}')
     
-    # check if appointment is already booked
+    # Check if appointment is already booked
     for appt in appt_list:
         if appt.get_day_of_week() == day:
             print(appt) 
 
 def save_scheduled_appointments(appt_list, file_name):
+    '''  This function prompts the user to input the filename for their appointment. It checks if the file already exists,
+    and if so, gives the user the option to proceed (overwrite) or repeat the filename input. It then iterates over each
+    appointment in the list and writes the scheduled appointments to the file in CSV format.
+
+    Arguments: appointment list,  file name 
+    
+    Returns: records count / number of scheduled appointments saved '''
+
     records_cnt = 0
     
     if check_file_exists(file_name):
@@ -43,20 +85,52 @@ def save_scheduled_appointments(appt_list, file_name):
             appointment_file.write(appt_row + "\n")
     appointment_file.close()
 
-    # check how many records in the file
+    # Check how many records in the file
     appointment_file = open(file_name,"r")
     for files in appointment_file:
         records_cnt += 1
 
     print (f'{records_cnt} scheduled appointments have been successfull saved\n')
 
-def show_appointments_by_name():
-    pass
+
+def show_appointments_by_name (appointment_list, name):
+    ''' This function receives the name of the client, searches from the appointment list and displays all matching appointments 
+    allowing partial and non-case sensitive matches.
+
+    Arguments: appointment list and name of customer '''
+     
+    name=name.strip().upper()
+    nameExists = False
+    print (TABLE_HEADER)
+    for appt in appointment_list:
+        clientName = appt.get_client_name().upper()
+        if clientName.startswith(name):
+            nameExists = True
+            print (appt)
+    if not nameExists:
+        print ('No appointments found.')
 
 def find_appointment_by_time (appointment_list, day, hour):
-    pass
+    ''' This function finds an appointment for a given day and start hour. If the appointment is found from the appointment
+    list, it returns the appointment object otherwise, returns nothing.
+
+    Arguments: appointment_list, appointment day, appointment start hour
+    
+    Returns: appointment object if found from the appointment list, otherwise returns nothing'''
+
+    for appt in appointment_list:
+        if appt.get_day_of_week() == day and \
+           appt.get_start_time_hour() == hour:
+            return appt
 
 def print_menu():
+    ''' This function prompts a menu and allows customer to choose from the given options.
+    It ensures that the input is valid prior to returning the value. 
+
+    No parameters/arguments taken
+
+    Returns: menu option selected by user '''
+
     print (f'\n\nJojo\'s Hair Salon Appointment Manager\n{"="*37}')
     for menuNumbers, description in OPTIONS_BANNER.items():
         print (f' {menuNumbers}) {description}')
@@ -67,6 +141,14 @@ def print_menu():
     return (menuChoice)
 
 def load_scheduled_appointments (appointment_list, filename):
+    ''' This function loads a scheduled appointment from a file. It reads / iterates over each line of the appointments in the file, 
+    parses the attribute values into separate variables, and calls find_appointment_by_time() to locate the corresponding appointment 
+    in the list. It then invokes the schedule() method to set the properties appropriately.
+    
+    Arguments: appointment list and filename
+
+    Returns: number of scheduled appointments loaded '''
+
     schedule_file = open (filename,'r')
     count_appts = 0
     for line in schedule_file:
@@ -84,11 +166,22 @@ def load_scheduled_appointments (appointment_list, filename):
     return count_appts
 
 def create_weekly_calendar (appointment_list):
+    ''' This function creates a weekly calendar by iterating through each day of the week from Mondays to Saturdays and its available 
+    hours for each day from 9AM to 4PM. It then creates new appointment object and adds it to the appointment list.
+
+    Arguments: appointment list'''
+
     for day in OPERATING_DAYS:
         for time in OPERATING_HOURS:
             appointment_list.append(ap.Appointment(day, time))
 
 def check_file_exists(file_name):
+    ''' This function checks and validates if the customer's given appointment file exist.
+    
+    Argument: appointment file name
+
+    Returns: TRUE if appointment file is found, otherwise FALSE'''
+
     found = False
 
     if os.path.isfile(file_name):
@@ -97,22 +190,42 @@ def check_file_exists(file_name):
     return found
    
 def enter_client_name():
+    ''' This function is to display client's name upon input.
+    
+    No parameters/arguments taken
+
+    Returns: client's name '''
+
     name = input('Client Name: ').capitalize()
 
     return name
 
 def check_previous_appointments():
+    ''' This function checks for previous and existing appointments.
+    
+    No parameters/arguments taken
+
+    Returns: appointment exists '''
+
     appointment_exists = False
 
     return appointment_exists
 
 def validate_day_and_time(day, time):
+    ''' This function validates if client's inputted day is within Mondays to Saturdays and if inputted time is within 9AM to 5PM.
+
+    Arguments: day (Monday-Saturday) and time (9AM - 5PM)
+
+    Returns: TRUE if day and time is within operating days and hours, otherwise FALSE '''
+
     if (day not in OPERATING_DAYS or time not in OPERATING_HOURS):
         print(ERROR_PROMPT)
         return False
     return True
 
 def print_appointment_types():
+    ''' This function is to print/display appointment types along with their corresponding prices '''
+
     menu_desc = ap.Appointment.menu_desc
 
     index = 0
@@ -128,6 +241,10 @@ def print_appointment_types():
 def save_schedule(appt_list, day, time, appt_type = 0, client_name = "", client_phone = "", output = True):
     current_appt = find_appointment_by_time(appt_list, day, time)
 
+    ''' This function 
+
+    '''
+
     if current_appt:
         # book it 
         current_appt.set_client_name(client_name)
@@ -138,6 +255,8 @@ def save_schedule(appt_list, day, time, appt_type = 0, client_name = "", client_
         print(f'OK, {client_name}\'s appointment is scheduled!')
 
 def main():    
+    ''' Contains the main logic and functionality of the program. '''
+
     # Declare Variables
     appt_list = []
     
