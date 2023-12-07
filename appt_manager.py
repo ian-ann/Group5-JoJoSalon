@@ -251,6 +251,7 @@ def main():
     while menuOption != '9':
         match menuOption:         
             case '1':
+                print (f'\n** {OPTIONS_BANNER["1"]} **')
                 day = input('What day: ').capitalize()
                 time = int(input('Enter start hour (24 hour clock) : '))
                 if validate_day_and_time(day, time):
@@ -269,13 +270,16 @@ def main():
                             current_appt.schedule(appt_type, client_name, client_phone)
                             print(f'OK, {client_name}\'s appointment is scheduled!')
             case '2':
+                print (f'\n** {OPTIONS_BANNER["2"]} **')
                 client_name = enter_client_name()
                 show_appointments_by_name(appt_list, client_name)
             case '3':
+                print (f'\n** {OPTIONS_BANNER["3"]} **')
                 print('** Print calendar for a specific day **')
                 day = input('Enter day of week: ').capitalize()
                 show_appointments_by_day(appt_list,day)
             case '4':
+                print (f'\n** {OPTIONS_BANNER["4"]} **')
                 day = input('What day: ').capitalize()
                 time = int(input('Enter start hour (24 hour clock) : '))
                 if validate_day_and_time(day, time):                 
