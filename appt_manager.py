@@ -192,17 +192,7 @@ def enter_client_name():
     name = input('Client Name: ').capitalize()
 
     return name
-
-def check_previous_appointments():
-    ''' This function checks for previous and existing appointments.
-    
-    No parameters/arguments taken
-
-    Returns: appointment exists '''
-
-    appointment_exists = False
-
-    return appointment_exists
+  
 
 def validate_day_and_time(day, time):
     ''' This function validates if client's inputted day is within Mondays to Saturdays and if inputted time is within 9AM to 5PM.
@@ -210,11 +200,11 @@ def validate_day_and_time(day, time):
     Arguments: day (Monday-Saturday) and time (9AM - 5PM)
 
     Returns: TRUE if day and time is within operating days and hours, otherwise FALSE '''
-
+    operational_times = True
     if (day not in OPERATING_DAYS or time not in OPERATING_HOURS):
         print(ERROR_PROMPT)
-        return False
-    return True
+        operational_times = False
+    return operational_times
 
 def print_appointment_types():
     ''' This function is to print/display appointment types along with their corresponding prices '''
@@ -235,11 +225,11 @@ def main():
     # Declare Variables
     appt_list = []
     
-    print('Starting the Appointment Manager System')
+    print('\nStarting the Appointment Manager System\n')
 
     # Create weekly calendar
     create_weekly_calendar(appt_list)
-    print('Weekly calendar created')
+    print('Weekly calendar created\n')
 
     # Call Load Schedule Appointments if Yes to load
     load_file = input('Would you like to load previously scheduled appointments from a file (Y/N)? ').upper().strip()
