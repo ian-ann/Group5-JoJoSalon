@@ -14,8 +14,7 @@
 #     
 # ***************************************************************************************************************************
 class Appointment :
-
-    #Desciption of each appointment type and their numeric identifier
+    #Description of each appointment type and their numeric identifier
     menu_desc = {0:"Available", 1:"Mens Cut", 2:"Ladies Cut", 3:"Mens Colouring",
                    4:"Ladies Colouring"}
     
@@ -56,15 +55,15 @@ class Appointment :
         '''Returns the hour that the appointment ends, from the Appointment object'''
         return self.__start_time_hour + 1
     
-    def set_client_name (self, name):
+    def set_client_name(self, client_name):
         ''' Setter method for client name'''
         self.__client_name = name
     
     def set_client_phone (self, phone):
         ''' Setter method for client phone'''
         self.__client_phone = phone
-
-    def set_appt_type (self, appt_type):
+       
+    def set_appt_type(self, appt_type):
         ''' Setter method for appointment type'''
         self.__appt_type = appt_type
     
