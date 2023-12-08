@@ -20,6 +20,8 @@ class Appointment :
                    4:"Ladies Colouring"}
     
     def __init__(self, day, time, name = "", phone = "", appt_type = 0):
+        ''' Initialize the Appointment class that requires the the properties day_of_week, start_time_hour, and optional properties of 
+        appt_type, client_name and client_phone '''
         self.__client_name = name
         self.__client_phone = phone
         self.__appt_type = appt_type
@@ -55,12 +57,15 @@ class Appointment :
         return self.__start_time_hour + 1
     
     def set_client_name (self, name):
+        ''' Setter method for client name'''
         self.__client_name = name
     
     def set_client_phone (self, phone):
+        ''' Setter method for client phone'''
         self.__client_phone = phone
 
     def set_appt_type (self, appt_type):
+        ''' Setter method for appointment type'''
         self.__appt_type = appt_type
     
     def schedule(self, client_name, client_phone, appt_type):
