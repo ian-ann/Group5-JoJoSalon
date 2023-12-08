@@ -291,7 +291,7 @@ def main():
 
         menuOption = print_menu()
 
-    print ('\n**Exit the system**')
+    print ('\n** Exit the system **')
     save_to_file = input('Would you like to save all scheduled appointments to a file (Y/N)? ').upper().strip()
     while save_to_file not in BINARY_CHOICE:
             save_to_file = input('Invalid selection. Save all scheduled appointments to a file (Y/N)? ').upper().strip()
