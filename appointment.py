@@ -57,7 +57,7 @@ class Appointment :
     
     def set_client_name(self, client_name):
         ''' Setter method for client name'''
-        self.__client_name = name
+        self.__client_name = client_name
     
     def set_client_phone (self, phone):
         ''' Setter method for client phone'''
