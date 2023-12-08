@@ -266,7 +266,7 @@ def main():
 
             case '2':
                 print (f'\n** {OPTIONS_BANNER["2"]} **')
-                client_name = enter_client_name()
+                client_name = input('Enter Client Name: ').capitalize().strip()
                 show_appointments_by_name(appt_list, client_name)
 
             case '3':
