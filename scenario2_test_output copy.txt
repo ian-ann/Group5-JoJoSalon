@@ -1,4 +1,4 @@
-PS C:\Users\Marian Estrada\OneDrive\QA WORK\Automation Codes\CPRG216E-Group5>  c:; cd 'c:\Users\Marian Estrada\OneDrive\QA WORK\Automation Codes\CPRG216E-Group5'; & 'C:\Users\Marian Estrada\AppData\Local\Programs\Python\Python311\python.exe' 'c:\Users\Marian Estrada\.vscode\extensions\ms-python.python-2023.20.0\pythonFiles\lib\python\debugpy\adapter/../..\debugpy\launcher' '53853' '--' 'c:\Users\Marian Estrada\OneDrive\QA WORK\Automation Codes\CPRG216E-Group5\appt_manager.py' 
+PS C:\Users\krist\OneDrive\Documents\GitHub\CPRG216E-Group5-JoJoSalon> & C:/Users/krist/AppData/Local/Programs/Python/Python311/python.exe "c:/OOP 4 FINAL PROJECT/appt_manager.py"
 
 Starting the Appointment Manager System
 Weekly calendar created
@@ -17,7 +17,7 @@ Enter your selection: 1
 ** Schedule an appointment **
 What day: Monday
 Enter start hour (24 hour clock) : 16
-Client Name: Annabelle 
+Client Name: Annabelle
 Client Phone: 403-200-2000
 Appointment types
 1: Mens Cut $50, 2: Ladies Cut $80, 3: Mens Colouring $50, 4: Ladies Colouring $120
@@ -37,7 +37,7 @@ Enter your selection: 1
 ** Schedule an appointment **
 What day: Monday
 Enter start hour (24 hour clock) : 16
-Sorry that time slot is booked already
+Sorry that time slot is booked already!
 
 
 Jojo's Hair Salon Appointment Manager
@@ -100,7 +100,9 @@ Jojo's Hair Salon Appointment Manager
 Enter your selection: 2
 
 ** Find appointment by name **
-Client Name: Sara
+Enter Client Name: Sara
+Appointments for Sara
+
 Client Name         Phone          Day       Start     End       Type
 --------------------------------------------------------------------------------
 No appointments found.
@@ -116,7 +118,9 @@ Jojo's Hair Salon Appointment Manager
 Enter your selection: 2
 
 ** Find appointment by name **
-Client Name: Tara
+Enter Client Name: Tara
+Appointments for Tara
+
 Client Name         Phone          Day       Start     End       Type
 --------------------------------------------------------------------------------
 Tara                587-765-4321   Friday    09:00  -  10:00     Ladies Cut
@@ -135,6 +139,21 @@ Enter your selection: 4
 What day: Sunday
 Enter start hour (24 hour clock) : 10
 Sorry that time slot is not in the weekly calendar!
+
+
+Jojo's Hair Salon Appointment Manager
+=====================================
+ 1) Schedule an appointment
+ 2) Find appointment by name
+ 3) Print calendar for a specific day
+ 4) Cancel an appointment
+ 9) Exit the system
+Enter your selection: 4
+
+** Cancel an appointment **
+What day: Friday
+Enter start hour (24 hour clock) : 10
+That time slot isn't booked and doesn't need to be cancelled
 
 
 Jojo's Hair Salon Appointment Manager
@@ -251,10 +270,10 @@ Jojo's Hair Salon Appointment Manager
  9) Exit the system
 Enter your selection: 9
 
-**Exit the system**
+** Exit the system **
 Would you like to save all scheduled appointments to a file (Y/N)? y
 Enter appointment filename: appointments3.csv
 2 scheduled appointments have been successfully saved
 Good Bye!
 
-PS C:\Users\Marian Estrada\OneDrive\QA WORK\Automation Codes\CPRG216E-Group5> 
+PS C:\Users\krist\OneDrive\Documents\GitHub\CPRG216E-Group5-JoJoSalon>

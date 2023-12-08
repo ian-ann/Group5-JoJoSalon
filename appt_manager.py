@@ -252,7 +252,7 @@ def main():
                     current_appt = find_appointment_by_time(appt_list, day, time)
                       
                     if current_appt.get_appt_type() != 0:
-                        print("Sorry that time slot is booked already")
+                        print("Sorry that time slot is booked already!")
                     else:
                         client_name = enter_client_name()
                         client_phone = input('Client Phone: ')
